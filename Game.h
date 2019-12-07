@@ -28,7 +28,7 @@ class Game
         int grid_w, grid_h;
         char **grid;
         void createGrid(int x, int y);
-        enum Terrain {WATER, SAND, GRASS, MOUNTAIN, TREE, YOU_ARE_WELCOME};
+        enum Terrain {WATER, SAND, GRASS, MOUNTAIN, ICE, YOU_ARE_WELCOME};
 };
 
 #endif // GAME_H
