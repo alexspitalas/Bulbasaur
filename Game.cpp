@@ -105,15 +105,15 @@ void Game::createGrid(float x, float y){
         for (int j = 0; j < grid_w; j++){
             int value = perlin2d(x-39-j, y -29-i, 0.075, 4)*1000;
             if (value <200){
-                grid[i][j] = 'w';
+                grid[i][j] = WATER;
             }else if(value < 450){
-                grid[i][j] = 'm';
+                grid[i][j] = MOUNTAIN;
             }else if (value < 700){
-                grid[i][j] = 'g';
+                grid[i][j] = GRASS;
             }else if( value < 950){
-                grid[i][j] = 's';
+                grid[i][j] = SAND;
             }else{
-                grid[i][j] = 't';
+                grid[i][j] = ICE;
             }
             
         }
