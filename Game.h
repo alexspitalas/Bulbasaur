@@ -1,21 +1,22 @@
 #ifndef GAME_H
 #define GAME_H
-
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
+#include "SDL.h"
+#include "SDL_image.h"
+#include <iostream>
 
 
 class Game
 {
     public:
         Game(SDL_Window* window, SDL_Renderer* renderer);
-        void handle_event(SDL_Event e);
+        void handle_event(SDL_Event e, bool *quit);
         void update();
-        
-        
     private:
         SDL_Window* window;
         SDL_Renderer* renderer;
+        SDL_Texture* sprite_sheet;
+        SDL_Texture* load_texture(std::string path);
+
         static int hash[];
         int noise2(int x, int y);
         float lin_inter(float x, float y, float s);
@@ -23,9 +24,8 @@ class Game
         float noise2d(float x, float y);
         float perlin2d(float x, float y, float freq, int depth);
         long seed;
-        void createGrid(float x, float y);
-        int grid_w = 80, grid_h = 60; //center is w =39 h = 29
-        //
+
+        int grid_w, grid_h;
         char **grid;
 };
 

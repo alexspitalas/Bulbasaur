@@ -3,18 +3,28 @@
 Game::Game(SDL_Window* window, SDL_Renderer* renderer){
     this->window = window;
     this->renderer = renderer;
-    grid = new char*[grid_h];
-    for (int i=0; i < grid_h;i++){
-        grid[i]= new char[grid_w];
+    sprite_sheet = load_texture("Resources\\sprite.png");
+
+    grid_w = 80;
+    grid_h = 60;
+}
+
+void Game::handle_event(SDL_Event e, bool *quit) {
+    if (e.type == SDL_QUIT) {
+        *quit = true;
     }
 }
 
-void Game::handle_event(SDL_Event e) {
-
-}
-
 void Game::update() {
-
+    for (int i = 0; i < grid_h; i++) {
+        for (int j = 0; j < grid_w; j++) {
+            SDL_Rect src_rect = {0, 0, 10, 10};
+            SDL_Rect dst_rect = {j * 10, i * 10, 10, 10};
+            SDL_RenderCopy(renderer, sprite_sheet, &src_rect, &dst_rect);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(2000);
+        }
+    }
 }
 
 int Game::hash[] = {208,34,231,213,32,248,233,56,161,78,24,140,71,48,140,254,245,255,247,247,40,
@@ -80,23 +90,9 @@ float Game::perlin2d(float x, float y, float freq, int depth)
     return fin/div;
 }
 
-void Game::createGrid(float x, float y){
-    for(int i = 0; i < grid_h; i++){
-        for (int j = 0; j < grid_w; j++){
-            int value = perlin2d(x-39-j, y -29-i, 0.075, 4)*1000;
-            if (value <200){
-                grid[i][j] = 'w';
-            }else if(value < 450){
-                grid[i][j] = 'm';
-            }else if (value < 700){
-                grid[i][j] = 'g';
-            }else if( value < 950){
-                grid[i][j] = 's';
-            }else{
-                grid[i][j] = 't';
-            }
-            
-        }
-    }
-    
+SDL_Texture* Game::load_texture(std::string path) {
+    SDL_Surface* temp = IMG_Load(path.c_str());
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, temp);
+    SDL_FreeSurface(temp);
+    return texture;
 }
