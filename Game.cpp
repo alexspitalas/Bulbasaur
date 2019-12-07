@@ -3,6 +3,10 @@
 Game::Game(SDL_Window* window, SDL_Renderer* renderer){
     this->window = window;
     this->renderer = renderer;
+    grid = new char*[grid_h];
+    for (int i=0; i < grid_h;i++){
+        grid[i]= new char[grid_w];
+    }
 }
 
 void Game::handle_event(SDL_Event e) {
@@ -74,4 +78,25 @@ float Game::perlin2d(float x, float y, float freq, int depth)
     }
 
     return fin/div;
+}
+
+void Game::createGrid(float x, float y){
+    for(int i = 0; i < grid_h; i++){
+        for (int j = 0; j < grid_w; j++){
+            int value = perlin2d(x-39-j, y -29-i, 0.075, 4)*1000;
+            if (value <200){
+                grid[i][j] = 'w';
+            }else if(value < 450){
+                grid[i][j] = 'm';
+            }else if (value < 700){
+                grid[i][j] = 'g';
+            }else if( value < 950){
+                grid[i][j] = 's';
+            }else{
+                grid[i][j] = 't';
+            }
+            
+        }
+    }
+    
 }

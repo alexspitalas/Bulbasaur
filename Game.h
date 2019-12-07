@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "SDL.h"
-#include "SDL_image.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 
 
 class Game
@@ -11,6 +11,8 @@ class Game
         Game(SDL_Window* window, SDL_Renderer* renderer);
         void handle_event(SDL_Event e);
         void update();
+        
+        
     private:
         SDL_Window* window;
         SDL_Renderer* renderer;
@@ -21,6 +23,10 @@ class Game
         float noise2d(float x, float y);
         float perlin2d(float x, float y, float freq, int depth);
         long seed;
+        void createGrid(float x, float y);
+        int grid_w = 80, grid_h = 60; //center is w =39 h = 29
+        //
+        char **grid;
 };
 
 #endif // GAME_H
